@@ -1,0 +1,8 @@
+{
+  "label": "Fluxos de Navegação",
+  "position": 4,
+  "link": {
+    "type": "generated-index",
+    "description": "Fluxo de telas por persona, do login à conclusão das tarefas principais."
+  }
+}

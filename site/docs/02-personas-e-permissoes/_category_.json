@@ -1,0 +1,8 @@
+{
+  "label": "Personas e Permissões",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "description": "Perfis de usuário do sistema e o que cada um pode ver e fazer."
+  }
+}

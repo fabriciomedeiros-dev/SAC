@@ -1,0 +1,26 @@
+# Docusaurus site
+site/node_modules/
+site/build/
+site/.docusaurus/
+site/.cache-loader/
+
+# Obsidian vault data (not part of the SAC documentation — contains plugin
+# secrets and unrelated chat exports, must never be committed)
+site/docs/.obsidian/
+site/docs/GeminiHelper/
+site/docs/skills/
+site/docs/chat-*.md
+
+# Claude Code local settings
+.claude/settings.local.json
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.log
+
+# Env files
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
