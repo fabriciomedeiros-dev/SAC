@@ -8,6 +8,7 @@ Esta pasta concentra o acompanhamento do projeto sem substituir a documentação
 - `decisoes.md`: decisões registradas e decisões ainda necessárias.
 - `tarefas.md`: pendências de planejamento e governança.
 - `historico.md`: marcos já documentados no repositório.
+- `comunicacao.md`: matriz de comunicação e modelos de notificações do projeto.
 
 ## Fonte de verdade
 
