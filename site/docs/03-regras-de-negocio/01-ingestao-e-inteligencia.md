@@ -5,37 +5,36 @@ sidebar_position: 1
 
 # Épico 1 — Captura e Inteligência (Ingestão)
 
-**Objetivo**: garantir que nenhuma manifestação do cliente seja perdida, centralizando dados de múltiplas fontes, filtrando ruído e aplicando a primeira camada de IA.
+**Objetivo**: centralizar manifestações do MVP, filtrar ruído e apoiar o Operador de SAC na classificação e resposta.
 
-**Perfil envolvido**: Operador de Triagem (consulta/gestão da Sandbox). O motor de ingestão é automatizado, sem interface de usuário além do resultado na fila.
+## Canais do MVP
 
-## Regras de negócio
+- **Reclame Aqui**: captura por API. A resposta é manual na origem e fica registrada no SAC.
+- **E-mail, site e App do Clube**: entram no SAC pelos conectores/formulários definidos no pré-desenvolvimento.
+- **Telefone**: registro manual pelo Operador de SAC.
+- **Agência Digital**: abre chamados críticos diretamente, por perfil restrito.
 
-### Ingestão e sincronização de fontes
-- Captura via API/Scraping de fontes externas (Reclame Aqui, Google, Redes Sociais, e-mail, Aplicativo do Clube) e do Data Lake da SAERJ, no mínimo 2x ao dia (ex.: 08h00 e 13h00).
-- Cada ocorrência registrada guarda data, hora, canal de origem e link original.
-- Falha temporária em uma fonte não pode travar a captura das demais.
-- **Telefone não entra nesta esteira automática** — é sempre registro manual do operador. Ver [Abertura Manual de Chamado](./02-triagem-e-workflow.md#abertura-manual-de-chamado-telefone).
+Google, WhatsApp e BuzzMonitor não fazem parte do MVP. O Data Lake não é canal de reclamações.
 
-### Filtro de ruído (Sandbox)
-- Mensagens curtas, sem contexto, ou identificadas como spam vão para uma área de Sandbox.
-- Itens na Sandbox não disparam contagem de SLA.
-- Expurgo automático e definitivo após 7 dias exatos da captura.
-- Operador de Triagem pode resgatar manualmente um item da Sandbox para a fila principal.
+Cada ocorrência guarda canal, data/hora, conteúdo e link para a origem quando houver. Falhas temporárias de uma fonte não interrompem as demais.
 
-### Triagem assistida por IA
-- A IA classifica severidade, mede sentimento e gera rascunho de resposta com base no Manual de Tom de Voz.
-- Tags exibidas: Severidade, Sentimento, Tema.
-- O rascunho é sempre editável.
-- **Regra inegociável**: a IA nunca envia resposta automaticamente. Requer clique humano em "Aprovar e Enviar" pelo Operador de Triagem.
+## Sandbox
 
-### Agrupamento de ocorrências (deduplicação)
-- O sistema cruza CPF, e-mail, telefone ou @usuário e sugere quando uma nova ocorrência parece ser do mesmo cliente de um chamado já aberto.
-- Alerta visual de "Possível Duplicidade" — a decisão de mesclar é sempre manual.
-- Ao mesclar, o chamado resultante assume a severidade mais alta entre os dois e mantém o histórico de ambas as origens.
+- Mensagens sem sentido, sem contexto ou identificadas como spam vão para Sandbox.
+- Não geram SLA e podem ser resgatadas pelo Operador de SAC.
+- O expurgo é definitivo após sete dias da captura.
+- O MVP não retém itens da Sandbox para treinamento contínuo da IA.
 
-:::info Decisão — 16/07/2026
-Canal de resposta usado no "Aprovar e Enviar":
-- **E-mail, Site e App do Clube**: envio automático via API no momento do clique.
-- **Reclame Aqui e Redes Sociais**: sem API de resposta confirmada — o rascunho da IA funciona como sugestão de texto para o Operador **copiar e postar manualmente** na origem, usando o link direto para a postagem (já previsto como item Should Have do MVP).
-:::
+## IA e resposta humana
+
+- A IA sugere severidade, sentimento, tema e rascunho de resposta.
+- Todas as sugestões são editáveis e a IA nunca envia uma resposta automaticamente.
+- O Operador revisa e aprova a resposta no canal de origem. Quando houver e-mail disponível, registra também a cópia por e-mail.
+- Para site, a resposta é enviada por e-mail; para App do Clube, pela área/notificação interna e por e-mail; no telefone, o Operador solicita e-mail e registra o atendimento.
+- Não existe área de acompanhamento para o cliente no MVP.
+
+## Data Lake e deduplicação
+
+- O Data Lake corporativo é consultado em modo leitura para enriquecer o chamado com CRM, vendas, loja preferida/compra, ticket médio, frequência e histórico.
+- O vínculo automático só ocorre com CPF, e-mail ou telefone exato e único. Vínculos ambíguos exigem confirmação do Operador; vínculos manuais ficam registrados.
+- Possíveis duplicidades são apenas alertadas. O Operador decide unir, relacionar ou ignorar, preservando o histórico da decisão.

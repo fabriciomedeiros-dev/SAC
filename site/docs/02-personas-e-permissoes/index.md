@@ -5,66 +5,51 @@ sidebar_position: 1
 
 # Personas e Permissões
 
-O controle de usuários (autenticação, sessão, grupos) usa a infraestrutura nativa do Django — não é detalhado nesta documentação. Aqui definimos apenas **quem são os perfis de negócio** e **o que cada um pode ver e fazer**.
+O controle de usuários usa a infraestrutura nativa do Django. A matriz abaixo define os perfis de negócio do MVP.
 
 ## Perfis confirmados
 
 ### 1. Associado
 
-- **Quantidade de contas**: 11 (uma por associado, não por loja) — ver lista nominal em [Administração](../03-regras-de-negocio/05-administracao.md#cadastro-de-associados).
-- **Representa**: o escritório central do associado, responsável por todas as lojas vinculadas a ele.
-- **Acesso**: Portal do Associado.
+- **Quantidade de contas**: uma conta operacional por associado; não há login por loja, jurídico ou gerente, nem gestão de usuários pelo associado no MVP.
+- **Acesso**: Portal do Associado, limitado às lojas vinculadas.
+- **Responsabilidade**: registrar interações e finalizar o chamado com ação tomada, resposta/canal/data e anexos quando a natureza exigir.
 
-### 2. Atendente Telefônico
+### 2. Operador de SAC
 
-- **Representa**: pessoa da SAERJ dedicada exclusivamente ao atendimento por telefone.
-- **Acesso**: a tela de [Abertura Manual de Chamado](../03-regras-de-negocio/02-triagem-e-workflow.md#abertura-manual-de-chamado-telefone) — busca no CRM, cadastro do cliente quando não encontrado, registro do resumo da ligação — e a tela [Meus Atendimentos](../03-regras-de-negocio/02-triagem-e-workflow.md#meus-atendimentos), com o histórico dos próprios chamados abertos por telefone, agrupado por dia. Ao localizar o cliente por CPF/telefone/nome, vê o mesmo painel **Cliente (CRM)** do Operador de Triagem (identificação, ticket médio/frequência de compra e outras reclamações na rede) — decisão de 20/07/2026, para dar contexto completo do cliente já durante a ligação.
-- **Não acessa**: fila de triagem geral, dashboards, cadastro, aprovação de respostas de outros canais, Linha do Tempo/Auditoria completa (em Meus Atendimentos só vê o status e a transcrição do próprio chamado, não o histórico de auditoria de qualquer chamado).
-- **Motivo da separação**: quem atende telefone precisa estar disponível para a ligação em tempo real; misturar essa função com o monitoramento da fila e cobrança de SLA competiria pela atenção da mesma pessoa. Papel isolado por decisão de 13/07/2026.
+- **Representa**: a equipe operacional da SAERJ. Unifica as antigas funções de atendimento telefônico e triagem em um único painel.
+- **Acesso**: abertura manual por telefone, caixa de entrada, dados contextuais do Data Lake dentro do SAC, triagem, contato com cliente, atribuição, cobrança de SLA, Sandbox, administração e dashboards de governança.
+- **CRM contextual**: consulta os dados enriquecidos no SAC; não acessa diretamente o CRM/Data Lake.
+- **Concorrência**: podem existir múltiplos operadores, mas um chamado fica bloqueado exclusivamente enquanto um operador o trata.
 
-### 3. Operador de Triagem
+### 3. Agência Digital
 
-- **Representa**: equipe operacional da SAERJ responsável pelo dia a dia do SAC — é o **usuário principal da ferramenta**.
-- **Acesso**: Painel de Triagem e Workflow (fila, aprovação de respostas de IA, atribuição a associados, acompanhamento/cobrança de SLA), Sandbox, Cadastro (Associados/Lojas/SLA), Dashboards de Governança.
-- **Responsabilidades centrais**: monitorar as atividades, encaminhar chamados, cobrar resolução dentro do prazo, e revisar/aprovar toda resposta que sai para o cliente (nenhuma resposta é enviada sem passar por este perfil, exceto o resumo registrado pelo Atendente Telefônico durante a ligação).
+- **Acesso**: abrir chamados críticos diretamente na ferramenta.
+- **Restrições**: não acessa CRM/Data Lake, fila, SLA, dashboards ou chamados de terceiros.
 
 ### 4. Diretoria
 
-- **Representa**: patrocinadores do projeto — André Legey (CEO) e Danielle Moitas (Marketing).
-- **Acesso**: somente o Dashboard de performance de atendimento, em modo leitura.
+- **Acesso**: indicadores agregados em modo leitura, sem dados de contato de clientes ou linha do tempo individual.
 
 ## Matriz de permissões
 
-| Ação | Associado | Atendente Telefônico | Operador de Triagem | Diretoria |
+| Ação | Associado | Operador de SAC | Agência Digital | Diretoria |
 |---|:---:|:---:|:---:|:---:|
-| Abrir chamado manual (telefone) | ❌ | ✅ | ❌ | ❌ |
-| Cadastrar associados / lojas | ❌ | ❌ | ✅ | ❌ |
-| Definir regras de SLA (severidade → prazo) | ❌ | ❌ | ✅ | ❌ |
-| Ver fila de triagem (chamados não atribuídos) | ❌ | ❌ | ✅ | ❌ |
-| Revisar/aprovar resposta sugerida pela IA | ❌ | ❌ | ✅ | ❌ |
-| Atribuir chamado a um associado (dispara SLA) | ❌ | ❌ (só sugere loja/associado, ver nota¹) | ✅ | ❌ |
-| Ver chamados das próprias lojas | ✅ | ❌ | ❌ | ❌ |
-| Ver chamados de todos os associados | ❌ | ❌ | ✅ | ❌ |
-| Assumir chamado (desbloqueia dados LGPD do cliente) | ✅ (próprio) | ❌ | — | ❌ |
-| Ver dados financeiros/comportamentais do CRM (ticket médio, frequência) | ❌ | ✅ | ✅ | ❌ (só agregado) |
-| Buscar cliente no CRM (CPF/telefone/nome) | ❌ | ✅ | ✅ | ❌ |
-| Registrar resolução com evidência obrigatória | ✅ | ❌ | ❌ | ❌ |
-| Solicitar transferência de custódia para outro associado | ✅ | ❌ | ✅ | ❌ |
-| Ver dashboards de governança (mapa de calor, índice de aceitação) | ❌ | ❌ | ✅ | ✅ (leitura) |
-| Ver linha do tempo / auditoria de um chamado | ❌ | ❌ (só status + transcrição do próprio chamado, em [Meus Atendimentos](../03-regras-de-negocio/02-triagem-e-workflow.md#meus-atendimentos)) | ✅ | ❌ |
+| Abrir chamado manual por telefone | ❌ | ✅ | ❌ | ❌ |
+| Abrir chamado crítico | ❌ | ✅ | ✅ | ❌ |
+| Consultar contexto do Data Lake no SAC | ❌ | ✅ | ❌ | ❌ |
+| Triar, revisar resposta e atribuir associado | ❌ | ✅ | ❌ | ❌ |
+| Contatar o cliente antes do direcionamento | ❌ | ✅ | ❌ | ❌ |
+| Acompanhar e cobrar SLA | ❌ | ✅ | ❌ | ❌ |
+| Registrar interação e finalizar com evidência | ✅ | ❌ | ❌ | ❌ |
+| Corrigir loja no mesmo associado | ✅ | ✅ | ❌ | ❌ |
+| Redirecionar para outro associado | ✅ | ✅ | ❌ | ❌ |
+| Ver dashboard próprio | ✅ | ❌ | ❌ | ❌ |
+| Ver dashboards de governança | ❌ | ✅ | ❌ | ✅ |
+| Ver linha do tempo do chamado | Próprios | ✅ | Próprios abertos | ❌ |
 
-¹ Na Abertura Manual de Chamado, o Atendente pode indicar a loja informada pelo cliente; o sistema já resolve o associado responsável (loja pertence a um único associado). É só uma sugestão registrada no chamado — não substitui a atribuição do Operador, que continua sendo o gatilho oficial do SLA.
+## Regras de custódia e rastreabilidade
 
-## Regra de reatribuição dentro do mesmo associado
-
-Como uma única conta gerencia todas as lojas de um associado, mover um chamado de uma loja para outra **do mesmo associado** é uma reclassificação direta, sem fluxo de aceite (a mesma conta já enxerga as duas filas). O fluxo formal de **transferência de custódia** (com aceite explícito e SLA que continua contando com o remetente até a confirmação) só existe quando o destino é **outro associado**.
-
-## Rastreabilidade (trade-off aceito)
-
-O log de auditoria registra a conta do associado que executou a ação (ex.: quem assumiu o chamado, quem redirecionou), não a pessoa física ou loja específica dentro do escritório do associado. Ver [Escopo do MVP](../01-visao-geral/02-escopo-mvp.md).
-
-:::info Decisões — 16/07/2026
-- **Parametrização de SLA**: fica com o mesmo Operador de Triagem, sem sub-perfil "gestor" separado neste MVP. Revisitar apenas se surgir necessidade real de segregação de responsabilidade após o Go-Live.
-- **Diretoria**: conta individual por pessoa (André e Danielle) — não é acesso compartilhado. Permite auditoria de quem acessou o quê.
-- **Múltiplas contas por papel**: o sistema suporta mais de um Atendente Telefônico e mais de um Operador de Triagem logados simultaneamente (múltiplas contas no mesmo grupo). Ver [regra de concorrência](../03-regras-de-negocio/02-triagem-e-workflow.md#concorrencia-entre-operadores).
-:::
+- Trocar a loja dentro do mesmo associado é correção direta.
+- Redirecionar para outro associado inicia um novo ciclo de SLA para o destino e preserva todos os ciclos e eventos anteriores.
+- O histórico é imutável e registra a conta que executou a ação. A conta do associado pode registrar interações em nome de jurídico ou gerente, identificando o participante na própria interação.

@@ -9,18 +9,17 @@ sidebar_position: 2
 
 | Categoria | Funcionalidades |
 |---|---|
-| **Must Have** | Módulo de Abertura/Gestão de Chamados (workflow completo); Matriz de SLA dinâmica (por severidade/tipo); Módulo de Triagem com IA (classificação e prioridade); Dashboard de acompanhamento em tempo real (SAERJ, Associados e Diretoria); Integração com CRM (identificação por CPF) |
-| **Should Have** | Sugestão de resposta amigável via IA para o operador copiar; Link direto para postagem original (redes/Reclame Aqui); [Mecanismo de reabertura de chamados](../03-regras-de-negocio/02-triagem-e-workflow.md#reabertura-de-chamados) pelo Operador de Triagem; Pesquisa de satisfação pós-atendimento (nota 1–5, disparo 24h após resolução — ver [Épico 6](../03-regras-de-negocio/06-pesquisa-de-satisfacao.md)) |
-| **Could Have** | Histórico de interações sociais vinculado ao perfil CRM; Exportação de relatórios customizados em PDF/Excel; Pesquisa de opinião no PDV — condicionada a validação técnica com fornecedor de PDV/TEF (ver [Épico 7](../03-regras-de-negocio/07-pesquisa-opiniao-pdv.md)) |
-| **Won't Have (nesta fase)** | Resposta direta via API na origem (fora do escopo); App mobile dedicado (uso via Web Responsivo); Notificação ativa de SLA por e-mail/in-app (cobrança é só visual, via semáforo — decisão de 16/07/2026, ver [Triagem e Workflow](../03-regras-de-negocio/02-triagem-e-workflow.md)) |
+| **Must Have** | Núcleo de chamados; Operador de SAC; SLA por severidade; contexto de leitura do Data Lake; canais e-mail, site, App do Clube, telefone, Reclame Aqui e Agência Digital; tratativa/evidência do associado; dashboards definidos do associado. |
+| **Should Have** | Sugestão de resposta editável por IA; alerta de duplicidade; resposta manual na origem para Reclame Aqui; cópia por e-mail quando disponível. |
+| **Could Have** | Pesquisa de satisfação, exportação de relatórios e pesquisa de opinião no PDV, sujeitos à validação posterior. |
+| **Won't Have (nesta fase)** | Google, WhatsApp, BuzzMonitor, respostas automáticas por IA, acesso direto ao CRM/Data Lake, gestão de usuários do associado, contas por loja/jurídico, chat interno e workflow interno do associado. |
 
 ## Fora de escopo (confirmado em debate)
 
-- **Processo interno de resolução dentro do associado**: o sistema não modela quem, dentro do escritório do associado, efetivamente atendeu o chamado — apenas que a conta do associado registrou a resolução. Ver [Personas e Permissões](../02-personas-e-permissoes/index.md).
+- **Processo interno de resolução dentro do associado**: o sistema não modela tarefas, usuários ou chat internos. A conta operacional pode, contudo, registrar uma interação em nome de jurídico ou gerente.
 - **Escrita de volta no CRM transacional**: integração é unidirecional (leitura do Data Lake).
 - **Login por loja individual**: não haverá conta própria por loja neste MVP — ver decisão de personas.
 
 :::note Rastreabilidade
-Como não há login por loja nem registro de nome do atendente, o log de auditoria identifica a **conta do associado**, não a pessoa ou loja específica que tratou o chamado. Trade-off aceito explicitamente para o MVP.
+Como não há login por loja, o log identifica a **conta do associado**. Quando atuar em nome de jurídico ou gerente, a conta registra o participante na interação.
 :::
-

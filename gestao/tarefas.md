@@ -1,9 +1,16 @@
 # Tarefas de Gestão
 
-| Pendência | Situação | Dependência |
+## Até 16/09/2026 — pré-desenvolvimento
+
+| Entrega | Responsável | Situação |
 | --- | --- | --- |
-| Confirmar a sequência das fases de entrega | Pendente | Decisão explícita de planejamento |
+| Quadro de dependências: Data Lake, API Reclame Aqui, e-mail, formulários site/app e hospedagem/ambiente. | Alexandro (técnico) e Filipe (dados/regras) | Pendente |
+| Registrar custo, fornecedor, responsável e data para cada dependência. | Fabrício consolida; Marcelo trata orçamento/prioridade | Pendente |
+| Consolidar o MVP e o plano de execução. | Fabrício; Danielle decide escopo | Pendente |
+| Definir datas e critérios da homologação futura. | Fabrício, Alexandro e Filipe | Pendente |
 
-O Go-Live foi definido para 17/09/2026. A sequência das fases será tratada após a análise da transcrição da reunião de 01/09/2026.
+## Homologação futura
 
-Fonte: `site/docs/06-roadmap-e-sprints/Roadmap.md` e definições informadas em 03/09/2026.
+Validar perfil e permissões, canais, Data Lake, bloqueio exclusivo de chamado, SLA e histórico, interação e evidência, respostas, dashboard e testes operacionais.
+
+Fonte: decisões do MVP fornecidas em 03/09/2026.

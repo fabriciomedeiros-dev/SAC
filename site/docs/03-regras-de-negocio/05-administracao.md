@@ -11,12 +11,12 @@ Este épico não constava no TAP original. Foi identificado como lacuna durante 
 
 **Objetivo**: permitir que a SAERJ mantenha a base de associados, lojas e parâmetros de SLA sem depender de acesso técnico ao banco de dados.
 
-**Perfil envolvido**: Operador de Triagem.
+**Perfil envolvido**: Operador de SAC.
 
 ## Regras de negócio
 
 ### Cadastro de associados
-- A Rede (SAERJ) cadastra e mantém os 11 associados: dados de identificação e conta de acesso ao Portal do Associado.
+- A Rede (SAERJ) cadastra e mantém os 11 associados: dados de identificação e uma conta operacional de acesso ao Portal do Associado.
 
 :::info Associados confirmados — 16/07/2026
 ALVORADA · PADRÃO · TORRE · GMAP · REAL DE EDEN · BARRA OESTE · FLORESTA · FENIX · CRUZEIRO · NDP · RAMIGOS
@@ -31,6 +31,6 @@ ALVORADA · PADRÃO · TORRE · GMAP · REAL DE EDEN · BARRA OESTE · FLORESTA 
 - **Decisão 16/07/2026**: alteração de prazo **não é retroativa** — chamados já encaminhados mantêm o prazo com que foram abertos; só chamados atribuídos depois da mudança usam o novo valor.
 
 :::info Decisões — 16/07/2026
-- **Provisionamento de acesso**: o Operador de Triagem cadastra o associado na tela de Administração; ao salvar, o sistema dispara automaticamente um e-mail de convite com senha provisória. Não há criação manual de senha pelo Operador.
+- **Provisionamento de acesso**: o Operador de SAC cadastra o associado na tela de Administração; ao salvar, o sistema dispara automaticamente um e-mail de convite com senha provisória. Não há gestão de usuários pelo associado no MVP.
 - **Inativação de loja/associado**: bloqueia a entrada de *novos* chamados para aquela loja/associado, mas não afeta chamados já abertos — eles continuam visíveis e devem ser concluídos normalmente. Exclusão definitiva só é permitida quando não há mais chamados abertos vinculados.
 :::

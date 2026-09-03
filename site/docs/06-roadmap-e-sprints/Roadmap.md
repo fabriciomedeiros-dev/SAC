@@ -5,25 +5,33 @@ sidebar_position: 1
 
 # Roadmap e Sprints
 
-:::caution Proposta de Go-Live — aguardando confirmação
-Regra combinada: o Go-Live é prorrogado proporcionalmente ao atraso do início.
+## Marco de início
 
-**Cálculo**: ciclo original do TAP = Abril→Julho/2026 (4 meses, conforme seção Custo do TAP). Novo início = 2ª semana de agosto/2026 (assumindo 10/08/2026 como referência). Deslocamento = 4 meses e 10 dias.
+O início formal do desenvolvimento é **17/09/2026**. Esta data **não é Go-Live**. O Go-Live será definido depois que o cronograma detalhado e as etapas forem consolidados.
 
-Aplicando o mesmo deslocamento à data de Go-Live original (31/07/2026): **novo Go-Live ≈ 10/12/2026 (2ª semana de dezembro/2026)**, preservando a duração total de ~4 meses do TAP.
+## Pré-desenvolvimento — até 16/09/2026
 
-Isso ainda precisa de confirmação explícita antes de virar a base oficial das sprints.
-:::
+- MVP aprovado por Danielle Moitas.
+- Custos e contratações levantados.
+- Datas e responsáveis das dependências definidos: Data Lake, API do Reclame Aqui, e-mail, formulários do site/App do Clube e hospedagem/ambiente.
 
-## O que precisamos antes de montar as sprints
+## Ordem das fases
 
-1. **Nova data de Go-Live** — proposta de 10/12/2026 no topo desta página segue **sem confirmação** (decisão explícita de 16/07/2026: manter pendente por enquanto). Sprints não podem ser fechadas sem essa data.
-2. ~~Fluxos de navegação fechados~~ — concluído em 16/07/2026: as 4 personas (Operador de Triagem, Associado, Atendente Telefônico, Diretoria) têm fluxo de navegação desenhado.
-3. Confirmação se as fases do TAP (Especificação → Ingestão/IA → Portais/Workflow → Homologação) continuam válidas como ordem de entrega, ou se a ordem muda dado o atraso.
+1. Fundação técnica.
+2. Núcleo do chamado.
+3. Tratativa e SLA.
+4. Respostas, indicadores e validação.
 
-:::note Especificação funcional fechada — 16/07/2026
-As pendências de regra de negócio abertas em Personas, Épicos 1–6 e nos 4 fluxos de navegação foram todas resolvidas nesta data (ver histórico de decisões em cada documento). O que resta em aberto neste roadmap é só o item 1 (Go-Live) e o item 3 (ordem de entrega) — ambos de natureza de planejamento, não de especificação funcional.
-:::
+O Reclame Aqui é uma dependência iniciada cedo, mas não bloqueia o núcleo manual do chamado.
+
+## Homologação futura
+
+Abrange perfil e permissões, canais, Data Lake, bloqueio de chamado, SLA e histórico, interação e evidência, respostas, dashboard e testes operacionais.
+
+- Danielle Moitas: aceite funcional.
+- Alexandro Nascimento e Filipe Fachetti: validação técnica, dados e regras.
+- Marcelo Rebelo: autorização do Go-Live.
+- Fabrício: consolidação das evidências.
 
 ## Cadência (herdada do TAP, mantida)
 

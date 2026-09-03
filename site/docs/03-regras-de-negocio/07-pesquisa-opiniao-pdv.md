@@ -11,7 +11,7 @@ Não constava no TAP nem na matriz MoSCoW original. Adicionado por decisão de 1
 
 **Objetivo**: capturar um sinal de satisfação sobre a **experiência geral de compra**, no momento em que ela acontece — diferente do [Épico 6](./06-pesquisa-de-satisfacao.md), que mede a satisfação **pós-resolução de um chamado específico**. São duas fontes de dado independentes, com propósitos diferentes.
 
-**Perfil envolvido**: Operador de Triagem e Associado (consulta do painel de avaliação); captura é automatizada pelo PDV, sem interface de usuário do SAC para disparo.
+**Perfil envolvido**: Operador de SAC e Associado (consulta do painel de avaliação); captura é automatizada pelo PDV, sem interface de usuário do SAC para disparo.
 
 :::info Classificação MoSCoW — decisão 16/07/2026
 Entra como **Could Have**: valioso, mas depende de uma integração técnica ainda não validada (ver risco abaixo). Não compromete sprint do MVP até essa validação acontecer.
@@ -30,7 +30,7 @@ Entra como **Could Have**: valioso, mas depende de uma integração técnica ain
 - **Nota baixa não gera chamado automático** — mesma lógica já fechada no Épico 6: funciona só como indicador, sem disparar fluxo novo.
 
 ### Visibilidade
-- **Operador de Triagem**: painel de avaliação de todas as lojas da rede.
+- **Operador de SAC**: painel de avaliação de todas as lojas da rede.
 - **Associado**: painel de avaliação restrito às próprias lojas.
 - **Diretoria**: indicador agregado por associado/região, dentro dos Dashboards de Governança — mesmo padrão de acesso já usado para os demais indicadores.
 

@@ -11,12 +11,12 @@ A SAERJ, controladora da rede associativa Supermarket (11 associados, mais de 15
 
 ## Objetivo do sistema
 
-Plataforma web para governança do SAC Supermarket, integrada ao Data Lake da SAERJ, com triagem assistida por IA e módulos operacionais distintos para a administradora (SAERJ) e para os associados.
+Plataforma web para governança do SAC Supermarket, com consulta de leitura ao Data Lake da SAERJ, triagem assistida por IA e módulos operacionais para a SAERJ e os associados.
 
 ## Fonte
 
 Este documento consolida e substitui, para fins de especificação funcional, o **TAP — Termo de Abertura do Projeto SAC commDM** (v1.0, 28/04/2026). O TAP permanece como referência histórica de justificativa e patrocínio; regras de negócio, navegação e telas são mantidas apenas aqui.
 
 :::caution Cronograma revisado
-O cronograma original do TAP (Go-Live em 31/07/2026) está desatualizado. Novo início de execução previsto para a **2ª semana de agosto/2026**. A nova data de Go-Live ainda não foi definida — ver [Roadmap e Sprints](../06-roadmap-e-sprints/Roadmap.md).
+O Go-Live original do TAP (31/07/2026) está desatualizado. O desenvolvimento começa formalmente em **17/09/2026**; o Go-Live será definido após o cronograma detalhado — ver [Roadmap e Sprints](../06-roadmap-e-sprints/Roadmap.md).
 :::

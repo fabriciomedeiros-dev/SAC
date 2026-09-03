@@ -11,7 +11,7 @@ Não constava no TAP nem na matriz MoSCoW original. Adicionado por decisão de 1
 
 **Objetivo**: capturar a percepção do cliente após a resolução do chamado, gerando um dado de satisfação que hoje não existe no fluxo (a IA mede sentimento na *entrada* da manifestação, não depois da resolução).
 
-**Perfil envolvido**: Operador de Triagem (consulta dos resultados na rede toda) e Associado (consulta restrita às próprias lojas); envio é automatizado, sem interface de usuário para disparo manual.
+**Perfil envolvido**: Operador de SAC (consulta dos resultados na rede toda) e Associado (consulta restrita às próprias lojas); envio é automatizado, sem interface de usuário para disparo manual.
 
 :::info Classificação MoSCoW — decisão 16/07/2026
 Entra no MVP como **Should Have** (ver [Escopo do MVP](../01-visao-geral/02-escopo-mvp.md)). O épico era considerado risco de escopo por ter sido adicionado após o cronograma já pressionado, mas com as regras abaixo fechadas o esforço fica previsível o suficiente para entrar na priorização.
@@ -31,7 +31,7 @@ Entra no MVP como **Should Have** (ver [Escopo do MVP](../01-visao-geral/02-esco
 - Nota baixa **não** dispara nenhuma ação automática (não gera chamado novo) — funciona só como indicador nos dashboards de governança neste MVP.
 
 ### Visibilidade
-- **Operador de Triagem**: vê a nota agregada de todos os associados.
+- **Operador de SAC**: vê a nota agregada de todos os associados.
 - **Associado**: vê a nota média das próprias lojas, como incentivo de melhoria (ver [Portal do Associado](./03-portal-do-associado.md)). Não vê a nota de outros associados.
 - **Diretoria**: vê a nota agregada da rede, dentro do Índice de Aceitação — mesmo nível de acesso que já tinha para os demais indicadores.
 
