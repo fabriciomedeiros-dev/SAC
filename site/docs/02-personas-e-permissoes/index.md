@@ -18,8 +18,8 @@ O controle de usuários (autenticação, sessão, grupos) usa a infraestrutura n
 ### 2. Atendente Telefônico
 
 - **Representa**: pessoa da SAERJ dedicada exclusivamente ao atendimento por telefone.
-- **Acesso**: apenas a tela de [Abertura Manual de Chamado](../03-regras-de-negocio/02-triagem-e-workflow.md#abertura-manual-de-chamado-telefone) — busca no CRM, cadastro do cliente quando não encontrado, registro do resumo da ligação.
-- **Não acessa**: fila de triagem geral, dashboards, cadastro, aprovação de respostas de outros canais.
+- **Acesso**: a tela de [Abertura Manual de Chamado](../03-regras-de-negocio/02-triagem-e-workflow.md#abertura-manual-de-chamado-telefone) — busca no CRM, cadastro do cliente quando não encontrado, registro do resumo da ligação — e a tela [Meus Atendimentos](../03-regras-de-negocio/02-triagem-e-workflow.md#meus-atendimentos), com o histórico dos próprios chamados abertos por telefone, agrupado por dia. Ao localizar o cliente por CPF/telefone/nome, vê o mesmo painel **Cliente (CRM)** do Operador de Triagem (identificação, ticket médio/frequência de compra e outras reclamações na rede) — decisão de 20/07/2026, para dar contexto completo do cliente já durante a ligação.
+- **Não acessa**: fila de triagem geral, dashboards, cadastro, aprovação de respostas de outros canais, Linha do Tempo/Auditoria completa (em Meus Atendimentos só vê o status e a transcrição do próprio chamado, não o histórico de auditoria de qualquer chamado).
 - **Motivo da separação**: quem atende telefone precisa estar disponível para a ligação em tempo real; misturar essa função com o monitoramento da fila e cobrança de SLA competiria pela atenção da mesma pessoa. Papel isolado por decisão de 13/07/2026.
 
 ### 3. Operador de Triagem
@@ -42,16 +42,18 @@ O controle de usuários (autenticação, sessão, grupos) usa a infraestrutura n
 | Definir regras de SLA (severidade → prazo) | ❌ | ❌ | ✅ | ❌ |
 | Ver fila de triagem (chamados não atribuídos) | ❌ | ❌ | ✅ | ❌ |
 | Revisar/aprovar resposta sugerida pela IA | ❌ | ❌ | ✅ | ❌ |
-| Atribuir chamado a um associado (dispara SLA) | ❌ | ❌ | ✅ | ❌ |
+| Atribuir chamado a um associado (dispara SLA) | ❌ | ❌ (só sugere loja/associado, ver nota¹) | ✅ | ❌ |
 | Ver chamados das próprias lojas | ✅ | ❌ | ❌ | ❌ |
 | Ver chamados de todos os associados | ❌ | ❌ | ✅ | ❌ |
 | Assumir chamado (desbloqueia dados LGPD do cliente) | ✅ (próprio) | ❌ | — | ❌ |
-| Ver dados financeiros/comportamentais do CRM (ticket médio, frequência) | ❌ | ❌ | ✅ | ❌ (só agregado) |
+| Ver dados financeiros/comportamentais do CRM (ticket médio, frequência) | ❌ | ✅ | ✅ | ❌ (só agregado) |
 | Buscar cliente no CRM (CPF/telefone/nome) | ❌ | ✅ | ✅ | ❌ |
 | Registrar resolução com evidência obrigatória | ✅ | ❌ | ❌ | ❌ |
 | Solicitar transferência de custódia para outro associado | ✅ | ❌ | ✅ | ❌ |
 | Ver dashboards de governança (mapa de calor, índice de aceitação) | ❌ | ❌ | ✅ | ✅ (leitura) |
-| Ver linha do tempo / auditoria de um chamado | ❌ | ❌ | ✅ | ❌ |
+| Ver linha do tempo / auditoria de um chamado | ❌ | ❌ (só status + transcrição do próprio chamado, em [Meus Atendimentos](../03-regras-de-negocio/02-triagem-e-workflow.md#meus-atendimentos)) | ✅ | ❌ |
+
+¹ Na Abertura Manual de Chamado, o Atendente pode indicar a loja informada pelo cliente; o sistema já resolve o associado responsável (loja pertence a um único associado). É só uma sugestão registrada no chamado — não substitui a atribuição do Operador, que continua sendo o gatilho oficial do SLA.
 
 ## Regra de reatribuição dentro do mesmo associado
 
@@ -64,5 +66,5 @@ O log de auditoria registra a conta do associado que executou a ação (ex.: que
 :::info Decisões — 16/07/2026
 - **Parametrização de SLA**: fica com o mesmo Operador de Triagem, sem sub-perfil "gestor" separado neste MVP. Revisitar apenas se surgir necessidade real de segregação de responsabilidade após o Go-Live.
 - **Diretoria**: conta individual por pessoa (André e Danielle) — não é acesso compartilhado. Permite auditoria de quem acessou o quê.
-- **Múltiplas contas por papel**: o sistema suporta mais de um Atendente Telefônico e mais de um Operador de Triagem logados simultaneamente (múltiplas contas no mesmo grupo). Ver [regra de concorrência](../03-regras-de-negocio/02-triagem-e-workflow.md#concorrência-entre-operadores).
+- **Múltiplas contas por papel**: o sistema suporta mais de um Atendente Telefônico e mais de um Operador de Triagem logados simultaneamente (múltiplas contas no mesmo grupo). Ver [regra de concorrência](../03-regras-de-negocio/02-triagem-e-workflow.md#concorrencia-entre-operadores).
 :::

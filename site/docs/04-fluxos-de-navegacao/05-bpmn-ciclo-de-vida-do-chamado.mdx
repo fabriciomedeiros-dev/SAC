@@ -1,0 +1,95 @@
+---
+title: BPMN — Ciclo de Vida do Chamado
+sidebar_position: 5
+---
+
+import BpmnViewer from '@site/src/components/BpmnViewer';
+
+# Diagrama BPMN — Ciclo de Vida do Chamado
+
+Enquanto as páginas anteriores descrevem o fluxo **por persona** (o que cada perfil vê e faz), este diagrama mostra o **processo ponta a ponta**: da entrada do chamado em qualquer canal até a pesquisa de satisfação e o acompanhamento de desempenho.
+
+O diagrama é renderizado abaixo com o visualizador do [bpmn.io](https://bpmn.io/) (`bpmn-js`) a partir do arquivo `.bpmn` original — não é uma imagem. Use os controles para dar zoom, ajustar à tela, abrir em tela cheia ou baixar o arquivo.
+
+<BpmnViewer
+  src="/bpmn/ciclo-de-vida-do-chamado.bpmn"
+  title="Ciclo de vida do chamado — SAC Supermarket"
+  height={660}
+/>
+
+## Como ler o diagrama
+
+O processo está organizado em três raias:
+
+| Raia | Quem é | O que acontece nela |
+| --- | --- | --- |
+| **Sistema SAC Operador** | A ferramenta e o Operador de Triagem | Captação dos canais, classificação por IA, triagem, decisão de resposta e direcionamento |
+| **SAERJ** — subdividida em **Operação** e **Gestão** | Equipe interna da SAERJ | Tratamento dos chamados de responsabilidade da SAERJ (Operação) e acompanhamento de SLA, cobrança, pesquisa e relatórios (Gestão) |
+| **ASSOCIADO** | Supermercado associado | Recebimento, tratamento interno e finalização dos chamados direcionados a ele |
+
+### 1. Entrada e classificação
+
+O evento **Início** dispara seis canais de captação em paralelo: **e-mail**, **app**, **Site**, **Reclame Aqui**, **Redes Sociais** e **Telefone**.
+
+O telefone é o único canal com um passo extra antes da convergência — **Registro do chamado no sistema**, feito manualmente pelo Atendente Telefônico na raia da Operação da SAERJ. Os demais canais entram direto.
+
+Todos convergem em um gateway paralelo e seguem para a **Classificação dos chamados por IA** (tarefa de script), que entrega o chamado já classificado ao **Operador de triagem** (tarefa de usuário).
+
+### 2. Triagem
+
+O Operador avalia e o processo passa pelo gateway **"Chamado cabe resposta?"**:
+
+- **Não** → **Rejeita chamado** → **FIM**. O chamado morre na triagem.
+- **Sim** → **Direciona para Responsável** → gateway **"Quem é o Responsável?"**.
+
+### 3. Direcionamento e SLA
+
+O gateway de responsável abre dois caminhos, cada um passando por um **evento de temporizador (SLA)** antes de chegar ao destinatário:
+
+- Caminho do **Associado** → **Recebimento do Chamado pelo Associado** → **Processo interno do Associado** (subprocesso) → **Finalização do Chamado pelo associado**.
+- Caminho da **SAERJ** → **Recebimento do Chamado pela SAERJ** → **Processo interno da SAERJ** (subprocesso) → **Finalização do Chamado pela SAERJ**.
+
+Os dois subprocessos estão marcados como caixas fechadas: o que acontece dentro de cada organização não é modelado aqui, apenas o que o SAC precisa observar (recebeu, tratou, finalizou).
+
+### 4. Finalização, cobrança e pesquisa
+
+Independente de quem resolveu, o fluxo converge no evento de mensagem **Notificação de finalização de chamado**, que alimenta o **Acompanhamento dos chamados e SLA** (Gestão).
+
+Daí sai o gateway **"Chamado finalizado ou SLA atrasado?"**:
+
+- **Atrasado** → **Cobra responsável pelo chamado**, que devolve o chamado ao responsável — de volta ao **Recebimento pelo Associado** ou ao **Recebimento pela SAERJ**. É o laço de cobrança do SLA.
+- **Finalizado** → **Inicia pesquisa de satisfação do cliente** → **Acompanhamento de relatórios de desempenho** → **FIM**.
+
+## Relação com o restante da documentação
+
+- A triagem detalhada, com as telas e o comportamento do Operador, está em [Fluxo — Operador de Triagem](./01-operador-de-triagem.md).
+- O registro do chamado por telefone está em [Fluxo — Atendente Telefônico](./02-atendente-telefonico.md).
+- O trecho do Associado (recebimento, tratamento, finalização) está em [Fluxo — Associado](./03-associado.md).
+- O acompanhamento de SLA e os relatórios de desempenho estão em [Fluxo — Diretoria](./04-diretoria.md).
+- As regras que governam cada decisão do diagrama estão em [Regras de Negócio](../03-regras-de-negocio/02-triagem-e-workflow.md) e em [Pesquisa de Satisfação](../03-regras-de-negocio/06-pesquisa-de-satisfacao.md).
+
+## Pontos a revisar no diagrama
+
+Divergências identificadas na leitura do arquivo, a confirmar com quem modelou:
+
+- No gateway **"Quem é o Responsável?"**, o ramo rotulado **"SAERJ"** é o que chega à raia do **ASSOCIADO** (a aresta seguinte é rotulada "Associado"). O outro ramo, sem rótulo, é o que vai para a SAERJ. Os rótulos parecem trocados.
+- O rótulo **"Atasado"** no gateway de finalização deve ser **"Atrasado"**.
+- A tarefa **"Acompanha. relatores de desempenho."** parece ser **"Acompanhamento de relatórios de desempenho"**.
+- Apenas um dos dois temporizadores de SLA está nomeado ("SLA"); o outro está sem nome.
+
+## Como atualizar o diagrama
+
+O arquivo renderizado nesta página é [`site/static/bpmn/ciclo-de-vida-do-chamado.bpmn`](/bpmn/ciclo-de-vida-do-chamado.bpmn). Para alterá-lo:
+
+1. Abra o [editor do bpmn.io](https://demo.bpmn.io/) e arraste o arquivo `.bpmn` para a janela (ou use o botão **Baixar .bpmn** acima para obter a versão atual).
+2. Edite o diagrama.
+3. Exporte com **Download BPMN diagram** e substitua o arquivo em `site/static/bpmn/ciclo-de-vida-do-chamado.bpmn`.
+4. Faça commit do `.bpmn` — a página passa a renderizar a nova versão sem nenhuma outra alteração.
+
+Para embutir outro diagrama em qualquer página `.mdx`, coloque o `.bpmn` em `site/static/bpmn/` e use:
+
+```jsx
+import BpmnViewer from '@site/src/components/BpmnViewer';
+
+<BpmnViewer src="/bpmn/seu-diagrama.bpmn" title="Título do diagrama" height={640} />
+```

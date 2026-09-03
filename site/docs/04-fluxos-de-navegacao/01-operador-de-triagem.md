@@ -81,10 +81,10 @@ Acesso pouco frequente, fora do fluxo diário de triagem.
 
 - Mapa de Calor geográfico das lojas.
 - Índice de Aceitação (ranking Top 3 / Bottom 3).
-- Linha do Tempo / Auditoria — acessível também a partir de qualquer chamado, não só pelos que passaram pela Fila.
+- Linha do Tempo / Auditoria — acessível também a partir de qualquer chamado, não só pelos que passaram pela Fila. **É aqui que o Operador encontra chamados "Resolvidos"** (não há uma tela separada de "finalizados"): busca por número, tema ou loja, abre o chamado e, se o status for "Resolvido", tem a ação **"Reabrir"** disponível — ver [regra de reabertura](../03-regras-de-negocio/02-triagem-e-workflow.md#reabertura-de-chamados).
 
 :::info Decisões — 16/07/2026
 - **Ordenação padrão da Fila de Triagem**: severidade (desc) primeiro, depois mais antigo primeiro — confirma a proposta.
 - **"Cobrar associado"**: não existe ação explícita de lembrete manual nesta versão — notificação ativa foi fechada como Won't Have; o semáforo visual é o único sinal de cobrança. Ver [Triagem e Workflow](../03-regras-de-negocio/02-triagem-e-workflow.md).
-- **Concorrência entre operadores**: lock soft ("em análise por [nome]") ao abrir um chamado — ver [regra completa](../03-regras-de-negocio/02-triagem-e-workflow.md#concorrência-entre-operadores).
+- **Concorrência entre operadores**: lock soft ("em análise por [nome]") ao abrir um chamado — ver [regra completa](../03-regras-de-negocio/02-triagem-e-workflow.md#concorrencia-entre-operadores).
 :::

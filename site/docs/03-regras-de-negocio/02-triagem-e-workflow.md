@@ -21,10 +21,22 @@ sidebar_position: 2
   - Busca só por nome pode retornar mais de um resultado (nomes comuns) — nesse caso o sistema deve listar os candidatos e exigir que o operador confirme manualmente qual cliente é, em vez de vincular automaticamente.
   - Se o cliente não for encontrado, o operador cadastra manualmente os dados mínimos necessários para abrir o chamado.
 - **Registro obrigatório da comunicação**: o atendente preenche um campo de texto obrigatório (mínimo 50 caracteres — decisão de 16/07/2026) com o resumo do que foi informado/combinado com o cliente durante a ligação. Esse texto é o **registro oficial da interação** — não é substituído pela transcrição automática abaixo, é o que garante o registro mesmo se a transcrição falhar ou atrasar.
+- **Indicador de gravação em tela**: enquanto a ligação está em andamento, a tela exibe um aviso visual permanente de que a chamada está sendo gravada — reforço para o atendente lembrar o cliente do aviso de gravação exigido por LGPD (ver [Transcrição e resumo automático da ligação](#transcricao-automatica-da-ligacao) abaixo).
+- **Loja e associado — sugestão opcional** (decisão de 20/07/2026): se o cliente souber informar a loja, o Atendente pode selecioná-la no momento do registro. O sistema já preenche o associado responsável automaticamente (cada loja pertence a um único associado). Isso **não é uma atribuição** — o campo é só uma sugestão que ajuda o Operador de Triagem a classificar mais rápido; o chamado continua entrando na Fila de Triagem, e a atribuição oficial (que dispara o SLA) continua sendo ação exclusiva do Operador, exatamente como os demais canais que chegam com `assocSugerido` pela IA (ver [Vínculo com o CRM por CPF](#vinculo-crm-por-cpf) e a matriz de permissões em [Personas e Permissões](../02-personas-e-permissoes/index.md) — "Atribuir chamado a um associado" continua exclusivo do Operador).
 - A partir daqui, o chamado segue o mesmo fluxo dos demais canais: classificação de severidade, atribuição ao associado e disparo de SLA — já sob responsabilidade do Operador de Triagem, não mais do Atendente Telefônico.
+
+<a id="meus-atendimentos"></a>
+### Meus Atendimentos (histórico do Atendente Telefônico)
+Decisão de 20/07/2026 — nova tela para o Atendente Telefônico, além da Abertura Manual de Chamado:
+- Lista todos os chamados que o próprio atendente abriu por telefone, **agrupados por dia**.
+- Cada dia mostra o total de atendimentos e o tempo somado em ligação naquele dia; a tela também mostra os totais gerais (hoje e acumulado).
+- Cada item da lista mostra o status atual do chamado — incluindo os que **já foram encaminhados a um associado** pelo Operador de Triagem (o Atendente não vê a fila de triagem, mas acompanha o status dos próprios chamados aqui).
+- **Ao clicar num atendimento antigo**, o Atendente vê uma tela somente leitura com o status do chamado e a transcrição/resumo da ligação gerados pela IA (mesmo conteúdo do painel de transcrição descrito abaixo) — não vê a Linha do Tempo/Auditoria completa nem os campos de triagem, que continuam exclusivos do Operador.
 
 <a id="transcricao-automatica-da-ligacao"></a>
 ### Transcrição e resumo automático da ligação
+Evolução do canal telefone, integrando o PABX existente:
+
 :::info Arquitetura e decisões — 17/07/2026
 A SAERJ já possui um PABX **Grandstream UCM6204** com servidor de gravação de chamadas nativo. Pipeline para enriquecer o chamado telefônico automaticamente, **sem substituir** o resumo manual do atendente:
 
@@ -55,16 +67,22 @@ Ligação
 - Filtros de seleção múltipla por Fonte, Severidade sugerida e Data.
 
 <a id="vinculo-crm-por-cpf"></a>
-### Vínculo com o CRM por CPF (visão do Operador)
+### Vínculo com o CRM por CPF (painel Cliente/CRM)
+Regra que conecta a triagem ao cadastro do cliente:
+
 :::info Decisão — 16/07/2026
 O CPF é a **chave de vínculo** entre a manifestação e o cadastro do cliente no CRM/Data Lake — reforça o Must Have "Integração com CRM (identificação por CPF)" já presente no [Escopo do MVP](../01-visao-geral/02-escopo-mvp.md).
 :::
-- **Quando há CPF identificado** (informado pelo próprio canal, ou resolvido por telefone/e-mail/@usuário na deduplicação, ou confirmado manualmente pelo Atendente/Operador), o Detalhe do Chamado busca automaticamente no CRM e exibe, num painel dedicado:
+- **Quando há CPF identificado** (informado pelo próprio canal, ou resolvido por telefone/e-mail/@usuário na deduplicação, ou confirmado manualmente pelo Atendente/Operador), o Detalhe do Chamado busca automaticamente no CRM e exibe, num painel dedicado ("Cliente (CRM)"):
   - Nome completo e CPF do cliente.
-  - **Dados de comportamento de compra**: ticket médio e frequência de compras na rede — exclusivo do Operador de Triagem (Associado não vê, Diretoria só vê agregado — ver [Personas e Permissões](../02-personas-e-permissoes/index.md)).
+  - **Dados de comportamento de compra**: ticket médio e frequência de compras na rede.
   - **Outras reclamações do mesmo cliente**: lista de chamados anteriores desse CPF em **qualquer canal, loja ou associado** da rede, com data, tema e status — não só chamados relacionados ao caso atual. Cada item da lista abre o respectivo chamado.
 - **Quando não há CPF identificado** (comum em Redes Sociais e Reclame Aqui, que não pedem CPF na origem): painel mostra "Cliente não identificado no CRM" até uma correspondência manual do Operador.
-- Este painel é mais amplo que a **Visão 360°** do Portal do Associado (Épico 3), que mostra só o histórico de chamados do cliente, sem dado financeiro/comportamental.
+- Este painel é mais amplo que a **Visão 360°** do Portal do Associado (Épico 3), que mostra só o histórico de chamados do cliente, sem dado financeiro/comportamental — essa parte segue exclusiva de Operador de Triagem e Atendente Telefônico (Associado não vê, Diretoria só vê agregado — ver [Personas e Permissões](../02-personas-e-permissoes/index.md)).
+
+:::info Decisão — 20/07/2026 — extensão ao Atendente Telefônico
+O painel completo "Cliente (CRM)" (identificação + ticket médio/frequência + outras reclamações) passa a aparecer também na [Abertura Manual de Chamado](#abertura-manual-de-chamado-telefone), assim que o Atendente Telefônico localiza o cliente por CPF/telefone/nome — mesmo painel, mesmo conteúdo, para dar contexto completo já durante a ligação. Antes desta decisão, o Atendente só via nome/CPF/telefone; a mudança amplia o que esse perfil pode ver no CRM.
+:::
 
 ### Atribuição e disparo de SLA
 - Operador de Triagem seleciona o **associado** responsável (não mais "loja", já que o login é por associado — ver [Personas e Permissões](../02-personas-e-permissoes/index.md)) e confirma a abertura do chamado.
@@ -91,7 +109,25 @@ Regra revista em relação ao TAP original, por conta do login ser por associado
   3. O associado de destino precisa clicar em "Aceitar Transferência".
   4. A alteração fica registrada no log de histórico do chamado.
 
-<a id="concorrência-entre-operadores"></a>
+<a id="reabertura-de-chamados"></a>
+### Reabertura de chamados
+Como tratar um caso que o cliente diz não ter sido resolvido de fato:
+
+:::info Decisão — 17/07/2026
+Item já previsto como Should Have no [Escopo do MVP](../01-visao-geral/02-escopo-mvp.md), mas nunca detalhado até agora.
+:::
+- **Ação exclusiva do Operador de Triagem**, disparada manualmente a partir de um chamado com status **"Resolvido"**, localizado pela [Linha do Tempo/Auditoria](../04-fluxos-de-navegacao/01-operador-de-triagem.md) — não existe reabertura automática nem pelo Associado.
+- **Reabrir cria um novo chamado**, não altera o original:
+  - O novo chamado nasce com o campo **"Reabertura de CH-XXXX"**, herdando tema, tipo/severidade e associado responsável do chamado original (tudo editável, como em qualquer triagem) — evita re-digitar o caso do zero.
+  - Entra na Fila de Triagem normalmente, com **SLA novo, começando do zero** — consistente com a regra já existente de que o SLA é interrompido *permanentemente* ao resolver (não faria sentido "destravar" um cronômetro que a própria regra chama de permanente).
+  - O chamado **original nunca muda de status** — continua "Resolvido", com sua Ação Corretiva e evidência intactas (registro de auditoria imutável, ver [Dashboards e Governança](./04-dashboards-e-governanca.md)). Ganha apenas uma entrada na linha do tempo: "Reaberto — vinculado a CH-YYYY", com link para o novo chamado.
+  - Os dois chamados ficam cruzados na Auditoria: o original mostra o link para a reabertura, o novo mostra o link para o caso original.
+- **Gatilho é manual**: o Operador decide reabrir com base em contato direto do cliente (ex.: reclamando que o problema persiste). Não há detecção automática cruzando uma nova manifestação com um chamado já resolvido — diferente da deduplicação do [Épico 1](./01-ingestao-e-inteligencia.md), que só atua sobre chamados **abertos**. Avaliar automação futura se o volume de reaberturas justificar.
+
+<a id="concorrencia-entre-operadores"></a>
+### Concorrência, notificações e tamanho do resumo
+Três decisões operacionais menores, agrupadas aqui:
+
 :::info Decisões — 16/07/2026
 - **Concorrência entre operadores**: lock *soft*. Ao abrir um chamado, o sistema marca "em análise por [nome do operador]" para quem mais olhar a fila — não bloqueia a ação, só avisa. Suficiente para o volume esperado no MVP; um lock rígido pode ser avaliado depois se virar problema real.
 - **Notificações ativas de SLA (e-mail/in-app)**: **Won't Have nesta fase** — não consta na matriz MoSCoW e o semáforo visual já é o mecanismo de cobrança assumido. A ação de "cobrar associado" continua sendo o Operador olhar a tela de Encaminhados, sem lembrete automático.

@@ -11,6 +11,32 @@ sidebar_position: 3
 
 ## Regras de negócio
 
+<a id="organização-da-tela-de-detalhe"></a>
+### Organização da tela de Detalhe do Chamado
+Gap identificado: a tela misturava informação objetiva do chamado (status, prazo, SLA), dado sensível do cliente e histórico de apoio num único bloco, dificultando a leitura rápida pelo associado. A tela passa a usar um layout em duas colunas (ver [Fluxo — Associado](../04-fluxos-de-navegacao/03-associado.md#2-detalhe-do-chamado--organização-da-tela)):
+
+**Coluna central (principal) — interações do chamado**, em ordem cronológica:
+- Linha do Tempo/Histórico: consolida abertura, atribuição, transferências e notas de andamento — é consulta e registro de auditoria, não dado de status isolado.
+- Notas de andamento: campo onde o associado registra tratativas intermediárias.
+- Ação Corretiva + botão "Resolver": ficam no final desta coluna, como o encerramento da interação, não como um bloco de status separado.
+
+**Coluna lateral (à direita) — informações de apoio**, sem interação direta, em dois blocos empilhados:
+1. **Status do Chamado** — sem dado sensível do cliente, sempre visível independente do modo (Pendente/Em Atendimento):
+   - Número do chamado.
+   - Canal de origem (Aberto via).
+   - Data/hora de abertura.
+   - Status/etapa atual (ex.: "Em Atendimento", "Na fila de atendimento").
+   - Vencimento do SLA, com o mesmo semáforo verde/amarelo/vermelho da Fila (ver [Cronômetro de SLA dinâmico](./02-triagem-e-workflow.md#cronometro-de-sla-dinamico-semaforo)) — destaque visual claro quando fora do prazo.
+   - Data/hora de resolução, quando já resolvido.
+   - Reaberturas: quantidade e, quando aplicável, link para o chamado vinculado (ver [Reabertura de chamados](./02-triagem-e-workflow.md#reabertura-de-chamados)).
+   - Tempo de vida do chamado, em horas corridas e em horas úteis (consistente com a pausa do cronômetro de SLA fora do horário comercial).
+   - Botões de custódia **"Assumir Chamado"** e **"Solicitar Transferência"** ficam junto deste bloco — são ações sobre o chamado como um todo, não parte da conversa central.
+2. **Dados do Cliente + Visão 360º** — dado sensível, sujeito à ofuscação/minimização já definida abaixo.
+
+:::note Decisão
+Não existe um status "Fechado" distinto de "Resolvido" neste MVP — diferente de outras ferramentas de mercado que separam "resolvido" (tratativa feita) de "fechado" (validado/encerrado depois). Aqui, "Resolver" já é o encerramento definitivo: o SLA para permanentemente e não há etapa posterior de validação/fechamento. Por isso o bloco de Status mostra apenas "Resolvido em", sem um campo "Fechado em" equivalente.
+:::
+
 ### Aceite e desbloqueio de dados (LGPD)
 - Antes do aceite, dados de contato do cliente aparecem ofuscados (ex.: `joao.***@gmail.com`, `(21) 9****-1234`).
 - Ao clicar em "Assumir Chamado", o status muda para "Em Atendimento" e o sistema libera **apenas os dados estritamente necessários** para o associado entrar em contato e resolver o caso — princípio de minimização de dados (LGPD), não liberação total do cadastro do cliente.
@@ -39,6 +65,13 @@ sidebar_position: 3
 ### Chamados em atraso — destaque obrigatório
 - Chamados com SLA estourado (vermelho) devem se destacar visualmente na fila do associado (ex.: ordenados no topo, cor de alerta, contador de "X chamados em atraso" visível assim que o associado loga).
 - Objetivo: pressionar o associado a finalizar chamados parados, não só informar — o atraso não pode ficar "escondido" numa lista comum.
+
+### Chamados resolvidos (histórico)
+:::info Decisão — 17/07/2026
+Gap identificado: a fila principal do associado só mostrava chamados em aberto — depois de "Resolver", o chamado simplesmente desaparecia da visão dele, sem nenhum lugar para consultar depois (ex.: conferir a Ação Corretiva que ele mesmo registrou).
+:::
+- O Portal do Associado tem uma aba **"Resolvidos"**, com os chamados já concluídos das próprias lojas — somente leitura (Ação Corretiva, evidência anexada, data de resolução).
+- O associado **não pode reabrir** — reabertura é [ação exclusiva do Operador de Triagem](./02-triagem-e-workflow.md#reabertura-de-chamados). Se o cliente reclamar de novo, o associado orienta o contato pelo canal de origem, que o Operador trata como reabertura.
 
 ### Chamados de múltiplas lojas
 - Como o login é por associado, a fila do Portal exibe chamados de **todas as lojas vinculadas** a esse associado, com filtro por loja.

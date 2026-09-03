@@ -18,5 +18,5 @@ Plataforma web para governança do SAC Supermarket, integrada ao Data Lake da SA
 Este documento consolida e substitui, para fins de especificação funcional, o **TAP — Termo de Abertura do Projeto SAC commDM** (v1.0, 28/04/2026). O TAP permanece como referência histórica de justificativa e patrocínio; regras de negócio, navegação e telas são mantidas apenas aqui.
 
 :::caution Cronograma revisado
-O cronograma original do TAP (Go-Live em 31/07/2026) está desatualizado. Novo início de execução previsto para a **2ª semana de agosto/2026**. A nova data de Go-Live ainda não foi definida — ver [Roadmap e Sprints](../06-roadmap-e-sprints/index.md).
+O cronograma original do TAP (Go-Live em 31/07/2026) está desatualizado. Novo início de execução previsto para a **2ª semana de agosto/2026**. A nova data de Go-Live ainda não foi definida — ver [Roadmap e Sprints](../06-roadmap-e-sprints/Roadmap.md).
 :::
