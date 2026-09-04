@@ -109,6 +109,9 @@ if (-not $Send) {
 
 $ZeptoToken = [Environment]::GetEnvironmentVariable('ZEPTO_API_TOKEN', 'Machine')
 if ([string]::IsNullOrWhiteSpace($ZeptoToken)) {
+    $ZeptoToken = [Environment]::GetEnvironmentVariable('ZEPTO_API_TOKEN', 'User')
+}
+if ([string]::IsNullOrWhiteSpace($ZeptoToken)) {
     $ZeptoToken = $env:ZEPTO_API_TOKEN
 }
 if ([string]::IsNullOrWhiteSpace($ZeptoToken)) {
@@ -116,6 +119,9 @@ if ([string]::IsNullOrWhiteSpace($ZeptoToken)) {
 }
 
 $FromAddress = [Environment]::GetEnvironmentVariable('PROJECT_NOTIFIER_FROM', 'Machine')
+if ([string]::IsNullOrWhiteSpace($FromAddress)) {
+    $FromAddress = [Environment]::GetEnvironmentVariable('PROJECT_NOTIFIER_FROM', 'User')
+}
 if ([string]::IsNullOrWhiteSpace($FromAddress)) { $FromAddress = 'notificacoes.projetos@redesupermarket.com.br' }
 
 $Recipients = @($Para | ForEach-Object {

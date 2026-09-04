@@ -5,10 +5,10 @@ Este notifier não chama IA. Ele gera uma prévia de e-mail a partir de `gestao/
 ## Pré-requisitos no Windows Server
 
 - PowerShell 5.1 ou posterior.
-- Variável de ambiente de máquina `ZEPTO_API_TOKEN`, criada com o token da API do agente Projetos no ZeptoMail.
+- Variável de ambiente `ZEPTO_API_TOKEN`, criada na conta que executará o notifier, com o token da API do agente Projetos no ZeptoMail.
 - Opcional: `PROJECT_NOTIFIER_FROM=notificacoes.projetos@redesupermarket.com.br`.
 
-Guarde o token em local seguro. Nunca o inclua no repositório, no arquivo de status ou em logs.
+Guarde o token em local seguro. Nunca o inclua no repositório, no arquivo de status ou em logs. Prefira uma variável de usuário da conta dedicada à tarefa, não um valor incluído no comando do Agendador.
 
 ## Atualizar o status
 
