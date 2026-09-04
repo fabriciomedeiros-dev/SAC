@@ -19,6 +19,10 @@ site/docs/chat-*.md
 Thumbs.db
 *.log
 
+# Project Notifier local artifacts
+notifier/outbox/
+notifier/logs/
+
 # Env files
 .env.local
 .env.development.local
